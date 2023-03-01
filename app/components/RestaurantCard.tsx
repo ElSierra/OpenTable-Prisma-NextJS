@@ -7,6 +7,14 @@ interface Props {
 }
 
 export const RestaurantCard = ({ restaurant }: Props) => {
+  const getReviewsLength = (len: number) => {
+    if (len > 1) {
+      return "reviews";
+    } else {
+      return "review";
+    }
+  };
+
   return (
     <div className="w-64 h-72 m-3 rounded overflow-hidden border cursor-pointer">
       <Link href={`/restaurant/${restaurant.slug}`}>
@@ -15,7 +23,11 @@ export const RestaurantCard = ({ restaurant }: Props) => {
           <h3 className="font-bold text-2xl mb-2">{restaurant.name}</h3>
           <div className="flex items-start">
             <div className="flex mb-2">{restaurant.price}</div>
-            <p className="ml-2">77 reviews</p>
+            <p className="ml-2">
+              {restaurant.reviews
+                ? `${restaurant.reviews.length} ${getReviewsLength(restaurant.reviews.length)}`
+                : `0 reviews`}
+            </p>
           </div>
           <div className="flex text-reg font-light capitalize">
             <p className=" mr-3">{restaurant.cuisine.name}</p>

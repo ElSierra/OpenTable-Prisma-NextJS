@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Review } from "@prisma/client";
 import { Description } from "./components/Description";
 import { Header } from "./components/Header";
 import Images from "./components/Images";
@@ -15,6 +15,7 @@ interface Restaurant {
   images: string[];
   description: string;
   slug: string;
+  reviews: Review[];
 }
 const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
   const restaurant = await prisma.restaurant.findUnique({
@@ -27,6 +28,7 @@ const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
       images: true,
       description: true,
       slug: true,
+      reviews: true,
     },
   });
   if (!restaurant) {
@@ -43,15 +45,28 @@ export default async function RestaurantDetails({
   const restaurant = await fetchRestaurant(params.slug);
   console.log("🚀 ~ file: page.tsx:28 ~ restaurant", restaurant);
 
+  const checkIfPeople = () => {
+    if (restaurant.reviews.length > 1) return true;
+    else return false;
+  };
+
   return (
     <>
       <div className="bg-white w-[70%] rounded p-3 shadow">
         <RestaurantNavBar slug={restaurant.slug} />
         <Title title={restaurant.name} />
-        <Rating />
+        <Rating review={restaurant.reviews} />
         <Description description={restaurant.description} />
         <Images Images={restaurant.images} />
-        <Reviews />
+        <h1 className="font-bold text-3xl mt-10 mb-7 borber-b pb-5">
+          What {restaurant.reviews.length}{" "}
+          {checkIfPeople()? "people" : "person"}
+          {checkIfPeople() ? "s" : ""} {checkIfPeople() ? "are": "is"} saying
+        </h1>
+
+        {restaurant.reviews.map((review) => {
+          return <Reviews key={review.id} review={review} />;
+        })}
       </div>
       <div className="w-[27%] relative text-reg">
         <ReservationCard />

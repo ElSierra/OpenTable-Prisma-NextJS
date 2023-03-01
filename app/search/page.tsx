@@ -21,6 +21,7 @@ const select = {
   slug: true,
   main_image: true,
   id: true,
+  reviews: true,
   cuisine: true,
   location: true,
 };
@@ -28,15 +29,7 @@ const prisma = new PrismaClient();
 
 const queryLocation = async (searchParams: SearchParams) => {
   const where: any = {};
-  // if (!city) return prisma.restaurant.findMany({select})
-  // return  prisma.restaurant.findMany({
-  //   where: {
-  //     location: {
-  //       name: {equals: city.toLowerCase()},
-  //     },
-  //   },
-  //   select,
-  // });
+
   if (searchParams.city) {
     const location = {
       name: {
