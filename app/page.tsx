@@ -1,10 +1,11 @@
 import { RestaurantCard } from "./components/RestaurantCard";
 import { Header } from "./components/Header";
 import { NavBar } from "./components/NavBar";
-import { Cuisine, Location, PRICE, PrismaClient, Review } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
+import { Cuisine, Location, PRICE, Review } from "@prisma/client";
 
 console.log(process.env.DATABASE_URL);
-const prisma = new PrismaClient();
+
 export interface RestaurantCardType {
   id: number;
   name: string;

@@ -1,4 +1,6 @@
-import { PrismaClient, Review } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
+import { Review } from "@prisma/client";
+import { notFound } from "next/navigation";
 import { Description } from "./components/Description";
 import { Header } from "./components/Header";
 import Images from "./components/Images";
@@ -8,7 +10,7 @@ import { RestaurantNavBar } from "./components/RestaurantNavBar";
 import Reviews from "./components/Reviews";
 import Title from "./components/Title";
 
-const prisma = new PrismaClient();
+
 interface Restaurant {
   id: number;
   name: string;
@@ -32,7 +34,7 @@ const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
     },
   });
   if (!restaurant) {
-    throw new Error();
+   notFound()
   }
   return restaurant;
 };

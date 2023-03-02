@@ -1,4 +1,5 @@
 import Price from "@/app/components/Price";
+import Stars from "@/app/components/Stars";
 import { RestaurantCardType } from "@/app/page";
 import { getAverageGrade } from "@/utils/calculateReview";
 import { getReviewTitle } from "@/utils/getReviewTitle";
@@ -20,9 +21,9 @@ export const RestaurantCard = ({
       <div className="pl-5">
         <h2 className="text-3xl">{name}</h2>
         <div className="flex items-start">
-          <div className="flex mb-2">*****</div>
+         <Stars reviews={reviews}/>
           <p className="ml-2 text-sm capitalize">
-            {getReviewTitle(getAverageGrade(reviews))}
+            {getReviewTitle(Number(getAverageGrade(reviews)))}
           </p>
         </div>
         <div className="mb-9">

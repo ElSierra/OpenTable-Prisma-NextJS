@@ -1,7 +1,7 @@
 export const getReviewTitle = (reviewGrade: number) => {
   if (reviewGrade >= 5) {
     return "excellent";
-  } else if (reviewGrade === 4) {
+  } else if (reviewGrade >= 4 && reviewGrade <5) {
     return "good";
   } else if (reviewGrade <= 3) {
     return "mid";
