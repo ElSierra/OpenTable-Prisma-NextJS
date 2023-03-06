@@ -1,5 +1,6 @@
 import Link from "next/link";
-import AuthModal from "./AuthModal";
+import AuthButtons from "./AuthButtons";
+
 
 export const NavBar = () => {
   return (
@@ -9,10 +10,7 @@ export const NavBar = () => {
         OpenTable{" "}
       </Link>
       <div>
-        <div className="flex">
-          <AuthModal isSignin />
-          <AuthModal isSignin={false} />
-        </div>
+       <AuthButtons/>
       </div>
     </nav>
   );
