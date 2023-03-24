@@ -10,10 +10,11 @@ import { RestaurantNavBar } from "./components/RestaurantNavBar";
 import Reviews from "./components/Reviews";
 import Title from "./components/Title";
 
-
 interface Restaurant {
   id: number;
   name: string;
+  open_time: string;
+  close_time: string;
   images: string[];
   description: string;
   slug: string;
@@ -30,11 +31,13 @@ const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
       images: true,
       description: true,
       slug: true,
+      open_time: true,
+      close_time: true,
       reviews: true,
     },
   });
   if (!restaurant) {
-   notFound()
+    notFound();
   }
   return restaurant;
 };
@@ -62,8 +65,8 @@ export default async function RestaurantDetails({
         <Images Images={restaurant.images} />
         <h1 className="font-bold text-3xl mt-10 mb-7 borber-b pb-5">
           What {restaurant.reviews.length}{" "}
-          {checkIfPeople()? "people" : "person"}
-          {checkIfPeople() ? "s" : ""} {checkIfPeople() ? "are": "is"} saying
+          {checkIfPeople() ? "people" : "person"}
+          {checkIfPeople() ? "s" : ""} {checkIfPeople() ? "are" : "is"} saying
         </h1>
 
         {restaurant.reviews.map((review) => {
@@ -71,7 +74,7 @@ export default async function RestaurantDetails({
         })}
       </div>
       <div className="w-[27%] relative text-reg">
-        <ReservationCard />
+        <ReservationCard openTime={restaurant.open_time} closeTime={restaurant.close_time} slug={restaurant.slug}/>
       </div>
     </>
   );

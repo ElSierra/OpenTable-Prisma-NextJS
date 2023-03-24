@@ -67,6 +67,16 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
   const handleClick = () => {
     if (isSignin) {
       signin({ email: input.email, password: input.password, handleClose });
+    } else {
+      signup({
+        email: input.email,
+        password: input.password,
+        handleClose,
+        city: input.city,
+        firstName: input.firstName,
+        lastName: input.lastName,
+        phone: input.phone,
+      });
     }
   };
 
@@ -95,11 +105,16 @@ export default function AuthModal({ isSignin }: { isSignin: boolean }) {
             </div>
           ) : (
             <div className="p-2 h-[600px]">
-              {error &&<Alert severity="error" className="mb-9">{error}</Alert>}
+              {error && (
+                <Alert severity="error" className="mb-9">
+                  {error}
+                </Alert>
+              )}
               <div className="uppercase font-bold text-center pb-2 border-b mb-2">
                 <p className="text-sm">
                   {renderContent("Sign In", "Create Account")}
                 </p>
+                <p>{data?.firstName} {data?.lastName}</p>
               </div>
               <div className="m-auto">
                 <h2 className="text-2xl font-light text-center">

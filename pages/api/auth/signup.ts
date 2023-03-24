@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { setCookie } from "cookies-next";
 import { NextApiRequest, NextApiResponse } from "next";
 import validator from "validator";
 
@@ -65,7 +66,20 @@ export default async function handler(
       },
     });
     const token = await createJWT(email);
-  return  res.status(200).json({token});
+    setCookie("jwt", token, {
+      req,
+      res,
+      maxAge: 60 * 6 * 24,
+      sameSite: "none",
+      secure: true,
+    });
+    res.status(200).json({
+      firstName: user.first_name,
+      lastName: user.last_name,
+      city: user.city,
+      email: user.email,
+      phone: user.phone,
+    });
   }
- return res.status(404).json("unknown endpoint");
+  return res.status(404).json("unknown endpoint");
 }

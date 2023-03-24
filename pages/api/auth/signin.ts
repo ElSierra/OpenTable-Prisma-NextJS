@@ -39,8 +39,14 @@ export default async function handler(
       const hashPassword = user.password;
       if (await compareHash(password, hashPassword)) {
         const jwt = await createJWT(user.email);
-        setCookie("jwt", jwt, { req, res, maxAge: 60 * 6 * 24 });
-        res.status(200).json({
+        setCookie("jwt", jwt, {
+          req,
+          res,
+          maxAge: 60 * 6 * 24,
+          sameSite: "none",
+          secure: true,
+        });
+      return  res.status(200).json({
           firstName: user.first_name,
           lastName: user.last_name,
           city: user.city,

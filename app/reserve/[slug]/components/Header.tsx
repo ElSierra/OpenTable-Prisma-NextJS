@@ -1,21 +1,36 @@
+import convertToDisplayDate from "@/utils/convertToDisplayDate";
+import { convertToDisplayTime } from "@/utils/convertToDisplayTime";
 import React from "react";
+import {format} from "date-fns";
 
-export default function Header() {
+export default function Header({
+  name,
+  main_image,
+  date,
+  partySize,
+}: {
+  name: string;
+  date: string;
+  partySize: string;
+  main_image: string;
+}) {
+  const dateTime = date?.split("T");
+  console.log(dateTime);
+  //@ts-ignore
+  const time = convertToDisplayTime(dateTime[1]);
+  const dateFormatted = format(new Date(date),'ccc, LLL d')
+  console.log(time)
   return (
     <div>
-      <h3 className="font-bold">You're almost done!</h3>
+      <h3 className="font-bold">{"You're almost done!"}</h3>
       <div className="mt-5 flex">
-        <img
-          src="https://images.otstatic.com/prod1/49153814/2/medium.jpg"
-          alt=""
-          className="w-32 h-18 rounded"
-        />
+        <img src={main_image} alt="" className="w-32 h-18 rounded" />
         <div className="ml-4">
-          <h1 className="text-3xl font-bold">Aiāna Restaurant Collective</h1>
+          <h1 className="text-3xl font-bold">{name}</h1>
           <div className="flex mt-3">
-            <p className="mr-6">Tues, 22, 2023</p>
-            <p className="mr-6">7:30 PM</p>
-            <p className="mr-6">3 people</p>
+            <p className="mr-6">{dateFormatted}</p>
+            <p className="mr-6">{time}</p>
+            <p className="mr-6">{partySize} people</p>
           </div>
         </div>
       </div>

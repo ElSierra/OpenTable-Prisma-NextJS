@@ -9,7 +9,7 @@ export default async function handler(
 ) {
   const bearerToken = req.headers["authorization"] as string;
   const token = bearerToken.split(" ")[1];
-  console.log(token)
+  console.log(token);
 
   const payload = jwt.decode(token) as { email: string; exp: number };
 
@@ -24,12 +24,24 @@ export default async function handler(
     },
     select: {
       id: true,
+      phone: true,
+
       email: true,
       first_name: true,
       last_name: true,
       city: true,
-      password: true,
     },
   });
-  return res.json({ user });
+  if (!user) {
+    res.status(401).json({ errorMessage: "Invalid Jwt" });
+  } else {
+    return res.json({
+      id: user.id,
+      phone: user.phone,
+      email: user.email,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      city: user.city,
+    });
+  }
 }
